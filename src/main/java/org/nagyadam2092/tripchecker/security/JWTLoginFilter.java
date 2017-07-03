@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
+    static final String ORIGIN = "http://localhost:3000";
 
     public JWTLoginFilter(String url, AuthenticationManager authManager) {
         super(new AntPathRequestMatcher(url));
@@ -26,6 +27,17 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     public Authentication attemptAuthentication(
             HttpServletRequest req, HttpServletResponse res)
             throws AuthenticationException, IOException, ServletException {
+
+        // CORS - should be deleted!
+        System.out.println(req.getHeader(ORIGIN));
+        System.out.println(req.getMethod());
+        String origin = req.getHeader(ORIGIN);
+        res.setHeader("Access-Control-Allow-Origin", "*");//* or origin as u prefer
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Headers",
+                req.getHeader("Access-Control-Request-Headers"));
+        // end of CORS
+
         AccountCredentials creds = new ObjectMapper()
                 .readValue(req.getInputStream(), AccountCredentials.class);
         System.out.println("creds.getUsername()" + creds.getUsername());
