@@ -2,12 +2,16 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import actions from './actions'
 import * as getters from './getters'
-import * as mutations from './mutations'
+import mutations from './mutations'
 
 Vue.use(Vuex)
 
 const state = {
-  isLoggedIn: !!localStorage.getItem('token')
+  auth: {
+    isLoggedIn: false,
+    pending: false,
+    token: null
+  }
 }
 
 const options = {

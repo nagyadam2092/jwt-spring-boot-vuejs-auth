@@ -2,14 +2,17 @@ import * as types from './mutation-types'
 
 const mutations = {
   [types.LOGIN] (state) {
-    state.pending = true
+    state.auth.pending = true
   },
-  [types.LOGIN_SUCCESS] (state) {
-    state.isLoggedIn = true
-    state.pending = false
+  [types.LOGIN_SUCCESS] (state, { token }) {
+    state.auth.isLoggedIn = true
+    state.auth.pending = false
+    state.auth.token = token
+    localStorage.setItem('JWT', token)
+    console.log(state)
   },
   [types.LOGOUT] (state) {
-    state.isLoggedIn = false
+    state.auth.isLoggedIn = false
   }
 }
 

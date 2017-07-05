@@ -12,11 +12,9 @@ const login = ({ commit }, creds) => {
     body: JSON.stringify(creds)
   })
     .then((response) => {
-      console.log('response: ', response)
-      if (response.status === 200 && response.token) {
-        console.log(response.token)
+      if (response.status === 200) {
+        response.json().then(json => commit(types.LOGIN_SUCCESS, json))
       }
-      response.json().then(json => console.log)
     })
 }
 

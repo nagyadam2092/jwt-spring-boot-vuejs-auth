@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { LOGIN } from '../store/mutation-types'
+import * as types from '../store/mutation-types'
 
 export default {
   name: 'login',
@@ -19,14 +19,12 @@ export default {
   },
   methods: {
     login () {
-      console.log('ohai')
-      console.log(this.$store.dispatch)
-      this.$store.dispatch(LOGIN, {
+      this.$store.dispatch(types.LOGIN, {
         username: this.username,
         password: this.password
-      }).then(() => {
+      }).then((data) => {
         // this.$router.push('/home')
-        console.log('oh')
+        console.log('oh', data)
       })
     }
   }
