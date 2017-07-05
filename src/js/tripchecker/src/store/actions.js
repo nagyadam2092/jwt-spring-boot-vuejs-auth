@@ -1,18 +1,22 @@
+import fetch from 'isomorphic-fetch'
 import * as types from './mutation-types'
 
 const login = ({ commit }, creds) => {
   commit(types.LOGIN) // show spinner
-  const data = new FormData()
-  data.append('json', JSON.stringify(creds))
-  console.log(creds)
   return fetch('http://localhost:8080/login', {
     method: 'POST',
-//    mode: 'cors',
-    data: data
+    headers: {
+      Accept: 'application/json'
+//      'Content-Type': 'application/json; charset=utf-8'
+    },
+    body: JSON.stringify(creds)
   })
-    .then((data) => {
-      console.log(data)
-      data.json().then(json => console.log)
+    .then((response) => {
+      console.log('response: ', response)
+      if (response.status === 200 && response.token) {
+        console.log(response.token)
+      }
+      response.json().then(json => console.log)
     })
 }
 

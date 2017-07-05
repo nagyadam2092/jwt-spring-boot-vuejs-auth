@@ -35,13 +35,11 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
         res.setHeader("Access-Control-Allow-Origin", "*");//* or origin as u prefer
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Headers",
-                req.getHeader("Access-Control-Request-Headers"));
+        req.getHeader("Access-Control-Request-Headers"));
         // end of CORS
 
         AccountCredentials creds = new ObjectMapper()
                 .readValue(req.getInputStream(), AccountCredentials.class);
-        System.out.println("creds.getUsername()" + creds.getUsername());
-        System.out.println("creds.getPassword()" + creds.getPassword());
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
                         creds.getUsername(),
