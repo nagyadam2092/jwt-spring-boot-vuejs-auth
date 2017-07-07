@@ -30,7 +30,9 @@ export default {
           })
         } else if (response.status === 401) {
           this.$store.commit(types.LOGIN_WRONG_CREDENTIALS)
+          this.$router.push('/')
         } else {
+          this.$router.push('/')
           this.$store.commit(types.LOGIN_ERROR)
         }
       })

@@ -3,27 +3,36 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import Login from '@/components/Login'
 import store from '../store'
+import * as types from '../store/mutation-types'
+
+const hasToken = (to, from, next) => {
+  const token = localStorage.getItem('JWT')
+  if (token) {
+    store.commit(types.LOGIN_SUCCESS, { token })
+    router.push('/home')
+  } else {
+    next()
+  }
+}
 
 const requireAuth = (to, from, next) => {
-  console.log(from)
-  console.log(to)
-  console.log(next)
-  console.log(store)
-  console.log('store.getters.isLoggedIn(): ', store.getters.isLoggedIn)
   if (store.getters.isLoggedIn) {
     next()
+  } else {
+    router.push('/')
   }
 }
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
       alias: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      beforeEnter: hasToken
     },
     {
       path: '/home',
@@ -33,3 +42,5 @@ export default new Router({
     }
   ]
 })
+
+export default router

@@ -1,15 +1,23 @@
 <template>
   <div class="hello">
-  Homeo
+    Homeo
+    <button v-on:click="logout">logout</button>
   </div>
 </template>
 
 <script>
+import * as types from '../store/mutation-types'
+
 export default {
   name: 'hello',
   data () {
     return {
       msg: ''
+    }
+  },
+  methods: {
+    logout () {
+      this.$store.dispatch(types.LOGOUT)
     }
   }
 }

@@ -9,19 +9,17 @@ const mutations = {
     state.auth.pending = false
     state.auth.token = token
     localStorage.setItem('JWT', token)
-    console.log(state)
   },
   [types.LOGIN_WRONG_CREDENTIALS] (state) {
     state.pending = false
     state.auth.isLoggedIn = false
-    console.log(types.LOGIN_WRONG_CREDENTIALS, state)
   },
   [types.LOGIN_ERROR] (state) {
     state.pending = false
     state.auth.isLoggedIn = false
-    console.log(types.LOGIN_ERROR, state)
   },
   [types.LOGOUT] (state) {
+    localStorage.removeItem('JWT')
     state.auth.isLoggedIn = false
   }
 }

@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import * as types from './mutation-types'
+import router from '../router'
 
 const login = ({ commit }, creds) => {
   commit(types.LOGIN) // show spinner
@@ -7,15 +8,15 @@ const login = ({ commit }, creds) => {
     method: 'POST',
     headers: {
       Accept: 'application/json'
-//      'Content-Type': 'application/json; charset=utf-8'
     },
     body: JSON.stringify(creds)
   })
 }
 
 const logout = ({ commit }) => {
-  localStorage.removeItem('token')
   commit(types.LOGOUT)
+  localStorage.removeItem('JWT')
+  router.push('/login')
 }
 
 export default {
