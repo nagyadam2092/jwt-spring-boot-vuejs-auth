@@ -11,11 +11,6 @@ const login = ({ commit }, creds) => {
     },
     body: JSON.stringify(creds)
   })
-    .then((response) => {
-      if (response.status === 200) {
-        response.json().then(json => commit(types.LOGIN_SUCCESS, json))
-      }
-    })
 }
 
 const logout = ({ commit }) => {

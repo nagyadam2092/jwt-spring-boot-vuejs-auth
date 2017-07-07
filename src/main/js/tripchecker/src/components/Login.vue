@@ -22,9 +22,17 @@ export default {
       this.$store.dispatch(types.LOGIN, {
         username: this.username,
         password: this.password
-      }).then((data) => {
-        // this.$router.push('/home')
-        console.log('oh', data)
+      }).then((response) => {
+        if (response.status === 200) {
+          response.json().then(json => {
+            this.$store.commit(types.LOGIN_SUCCESS, json)
+            this.$router.push('/home')
+          })
+        } else if (response.status === 401) {
+          this.$store.commit(types.LOGIN_WRONG_CREDENTIALS)
+        } else {
+          this.$store.commit(types.LOGIN_ERROR)
+        }
       })
     }
   }
