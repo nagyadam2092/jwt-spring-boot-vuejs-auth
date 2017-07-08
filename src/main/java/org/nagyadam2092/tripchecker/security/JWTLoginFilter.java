@@ -14,8 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
     static final String ORIGIN = "http://localhost:3000";
 
     public JWTLoginFilter(String url, AuthenticationManager authManager) {
@@ -29,8 +32,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
             throws AuthenticationException, IOException, ServletException {
 
         // CORS - should be deleted!
-        System.out.println(req.getHeader(ORIGIN));
-        System.out.println(req.getMethod());
         String origin = req.getHeader(ORIGIN);
         res.setHeader("Access-Control-Allow-Origin", "*");//* or origin as u prefer
         res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -40,6 +41,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
         AccountCredentials creds = new ObjectMapper()
                 .readValue(req.getInputStream(), AccountCredentials.class);
+        log.info("User logged in: " + creds.getUsername());
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
                         creds.getUsername(),
