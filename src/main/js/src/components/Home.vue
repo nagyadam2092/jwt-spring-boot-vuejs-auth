@@ -25,7 +25,7 @@ export default {
       this.$store.dispatch(types.LOGOUT)
     },
     fetchExample () {
-      fetch('http://localhost:8080/api/tripnames', {
+      fetch('/api/tripnames', {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + this.$store.getters.getToken

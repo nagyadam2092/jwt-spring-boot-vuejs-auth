@@ -6,6 +6,8 @@
     <img class='logo' src='../../../resources/static/logo.png' />
     <p class="title">Karika17</p>
     <form @submit.prevent='login({ username, password })'>
+      <p class='error'>{{error}}</p>
+      <p class='log'>{{log}}</p>
      <input type='text' placeholder='username' v-model='username'>
      <input type='password' placeholder='password' v-model='password'>
      <input type='submit' value='LOGIN'></button>
@@ -21,7 +23,9 @@ export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      error: '',
+      log: ''
     }
   },
   methods: {
@@ -36,12 +40,22 @@ export default {
             this.$router.push('/home')
           })
         } else if (response.status === 401) {
+          this.log = 401
+          response.json().then(json => {
+            this.error = json
+          })
           this.$store.commit(types.LOGIN_WRONG_CREDENTIALS)
           this.$router.push('/')
         } else {
+          this.log = 'else: ' + response.status
+          response.json().then(json => {
+            this.error = json
+          })
           this.$router.push('/')
           this.$store.commit(types.LOGIN_ERROR)
         }
+      }).catch(json => {
+        this.error = 'Unable to connect server.'
       })
     }
   }
@@ -88,6 +102,14 @@ export default {
     -webkit-text-stroke-color: black;
     font-size: 4em;
     font-family: Georgia, serif;
+  }
+
+  .error {
+    color: red;
+  }
+
+  .log {
+    color: blue;
   }
 
   input[type='text'],

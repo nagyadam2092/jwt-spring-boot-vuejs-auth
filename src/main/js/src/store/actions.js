@@ -4,7 +4,7 @@ import router from '../router'
 
 const login = ({ commit }, creds) => {
   commit(types.LOGIN) // show spinner
-  return fetch('http://localhost:8080/login', {
+  return fetch('/api/login', {
     method: 'POST',
     headers: {
       Accept: 'application/json'
