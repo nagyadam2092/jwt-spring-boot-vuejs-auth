@@ -19,8 +19,20 @@ const logout = ({ commit }) => {
   router.push('/login')
 }
 
+const sendCoordinates = ({ getters }) => {
+  const token = getters.getToken
+  console.log(token)
+  return fetch('/api/coordinate', {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  })
+}
+
 export default {
   [types.LOGIN]: login,
-  [types.LOGOUT]: logout
+  [types.LOGOUT]: logout,
+  [types.SEND_COORDINATES]: sendCoordinates
 }
 

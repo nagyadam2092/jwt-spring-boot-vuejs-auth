@@ -3,3 +3,6 @@ export const isLoggedIn = state =>
 
 export const getToken = state =>
   state.auth.token
+
+export const username = state =>
+  state.auth.username

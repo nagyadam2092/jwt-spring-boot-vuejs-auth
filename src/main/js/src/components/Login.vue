@@ -17,6 +17,7 @@
 
 <script>
 import * as types from '../store/mutation-types'
+import checkGeolocation from '../utils/check-geolocation'
 
 export default {
   name: 'login',
@@ -28,6 +29,11 @@ export default {
       log: ''
     }
   },
+  created: () => {
+    if (!checkGeolocation()) {
+      alert('NO GEOLOCATION, OH MY!')
+    }
+  },
   methods: {
     login () {
       this.$store.dispatch(types.LOGIN, {
@@ -36,7 +42,10 @@ export default {
       }).then((response) => {
         if (response.status === 200) {
           response.json().then(json => {
-            this.$store.commit(types.LOGIN_SUCCESS, json)
+            this.$store.commit(types.LOGIN_SUCCESS, {
+              token: json.token,
+              username: this.username
+            })
             this.$router.push('/home')
           })
         } else if (response.status === 401) {
