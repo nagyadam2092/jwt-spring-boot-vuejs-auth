@@ -28,15 +28,18 @@
         this.lat = lat
         this.lng = lng
         fetch('/api/userlocation', {
-          method: 'POST',
-          header: {
-            Authorization: 'Bearer ' + this.$store.getters.getToken
+          method: 'post',
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + this.$store.getters.getToken,
+            'Content-Type': 'application/json'
           },
-          body: {
+          body: JSON.stringify({
             lat,
             lng,
-            username: this.$store.getters.username
-          }
+            username: this.$store.state.auth.username,
+            timestamp: new Date().getTime()
+          })
         })
       })
     },

@@ -36,6 +36,7 @@ export default {
   },
   methods: {
     login () {
+      const self = this
       this.$store.dispatch(types.LOGIN, {
         username: this.username,
         password: this.password
@@ -44,7 +45,7 @@ export default {
           response.json().then(json => {
             this.$store.commit(types.LOGIN_SUCCESS, {
               token: json.token,
-              username: this.username
+              username: self.username
             })
             this.$router.push('/home')
           })

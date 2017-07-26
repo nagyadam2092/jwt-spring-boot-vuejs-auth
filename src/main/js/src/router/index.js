@@ -7,8 +7,9 @@ import * as types from '../store/mutation-types'
 
 const hasToken = (to, from, next) => {
   const token = localStorage.getItem('JWT')
+  const username = localStorage.getItem('username')
   if (token) {
-    store.commit(types.LOGIN_SUCCESS, { token })
+    store.commit(types.LOGIN_SUCCESS, { token, username })
     router.push('/home')
   } else {
     next()

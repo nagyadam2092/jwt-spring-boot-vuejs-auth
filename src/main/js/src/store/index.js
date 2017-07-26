@@ -10,7 +10,8 @@ const state = {
   auth: {
     isLoggedIn: false,
     pending: false,
-    token: null
+    token: null,
+    username: null
   }
 }
 

@@ -31,12 +31,12 @@ public class UserLocationController {
         return userLocationRepository.findAll();
     }
 
-    @CrossOrigin
-    @GetMapping(path = "/userlastlocation")
-    public ResponseBody
-    UserLocation getLastUserLocation() {
-        return userLocationRepository.
-    }
+//    @CrossOrigin
+//    @GetMapping(path = "/userlastlocation")
+//    public ResponseBody
+//    UserLocation getLastUserLocation() {
+//        return userLocationRepository.
+//    }
 
     @CrossOrigin
     @PostMapping(path = "/userlocation")
